@@ -39,6 +39,7 @@ function FormPage() {
     <div className="form-center">
       <form className="form-card" onSubmit={handleSubmit}>
         <h2>Connexion / Inscription</h2>
+        <h1>hiiiiiiii</h1>
 
         <div className="form-group">
           <label htmlFor="matricule">Matricule</label>
