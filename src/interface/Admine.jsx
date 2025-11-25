@@ -19,19 +19,35 @@ export default function Admine() {
     setEtudiants(etudiants.filter((e) => e.id !== id));
   };
 
+  const importerEtudiants = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => setEtudiants(JSON.parse(event.target.result));
+    reader.readAsText(file);
+  };
+
   /******************** ENSEIGNANTS ********************/
   const [enseignants, setEnseignants] = useState([]);
   const [nomEns, setNomEns] = useState("");
   const [prenomEns, setPrenomEns] = useState("");
 
   const ajouterEnseignant = () => {
-    if (!nomEns || !grade) return;
-    setEnseignants([...enseignants, { id: Date.now(), nom: nomEns, grade }]);
-    setNomEns(""); setGrade("");
+    if (!nomEns || !prenomEns) return;
+    setEnseignants([...enseignants, { id: Date.now(), nom: nomEns, prenom: prenomEns }]);
+    setNomEns(""); setPrenomEns("");
   };
 
   const supprimerEnseignant = (id) => {
     setEnseignants(enseignants.filter((e) => e.id !== id));
+  };
+
+  const importerEnseignants = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => setEnseignants(JSON.parse(event.target.result));
+    reader.readAsText(file);
   };
 
   /******************** MODULES ********************/
@@ -49,6 +65,14 @@ export default function Admine() {
     setModules(modules.filter((m) => m.id !== id));
   };
 
+  const importerModules = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => setModules(JSON.parse(event.target.result));
+    reader.readAsText(file);
+  };
+
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
       <h1 style={{ textAlign: "center" }}>Interface Administrateur</h1>
@@ -61,6 +85,7 @@ export default function Admine() {
       <input placeholder="Spécialité" value={specialite} onChange={(e) => setSpecialite(e.target.value)} />
       <input placeholder="Groupe" value={groupe} onChange={(e) => setGroupe(e.target.value)} />
       <button onClick={ajouterEtudiant}>Ajouter</button>
+      <input type="file" accept=".json" onChange={importerEtudiants} />
 
       <table border="1" width="100%" style={{ marginTop: "10px" }}>
         <thead>
@@ -84,19 +109,20 @@ export default function Admine() {
 
       {/* ================= ENSEIGNANTS ================= */}
       <h2>Gestion des Enseignants</h2>
-      <input placeholder="Nom enseignant" value={nomEns} onChange={(e) => setNomEns(e.target.value)} />
-       <input placeholder="Prenom enseignant" value={prenomEns} onChange={(e) => setPrenomEns(e.target.value)} />
+      <input placeholder="Nom" value={nomEns} onChange={(e) => setNomEns(e.target.value)} />
+      <input placeholder="Prénom" value={prenomEns} onChange={(e) => setPrenomEns(e.target.value)} />
       <button onClick={ajouterEnseignant}>Ajouter</button>
+      <input type="file" accept=".json" onChange={importerEnseignants} />
 
       <table border="1" width="100%" style={{ marginTop: "10px" }}>
         <thead>
-          <tr><th>Nom</th><th>Prenom</th><th>Action</th></tr>
+          <tr><th>Nom</th><th>Prénom</th><th>Action</th></tr>
         </thead>
         <tbody>
           {enseignants.map((e) => (
             <tr key={e.id}>
               <td>{e.nom}</td>
-              
+              <td>{e.prenom}</td>
               <td><button onClick={() => supprimerEnseignant(e.id)}>Supprimer</button></td>
             </tr>
           ))}
@@ -111,10 +137,11 @@ export default function Admine() {
       <select value={ensResponsable} onChange={(e) => setEnsResponsable(e.target.value)}>
         <option value="">-- Enseignant responsable --</option>
         {enseignants.map((e) => (
-          <option key={e.id} value={e.nom}>{e.nom}</option>
+          <option key={e.id} value={`${e.nom} ${e.prenom}`}>{e.nom} {e.prenom}</option>
         ))}
       </select>
       <button onClick={ajouterModule}>Ajouter</button>
+      <input type="file" accept=".json" onChange={importerModules} />
 
       <table border="1" width="100%" style={{ marginTop: "10px" }}>
         <thead>
@@ -144,17 +171,25 @@ export default function Admine() {
 function Salles() {
   const [nomSalle, setNomSalle] = useState("");
   const [capacite, setCapacite] = useState("");
-  const [typeSalle, setTypeSalle] = useState("");
+  const [localisation, setLocalisation] = useState("");
   const [salles, setSalles] = useState([]);
 
   const ajouterSalle = () => {
-    if (!nomSalle || !capacite || !typeSalle) return;
-    setSalles([...salles, { id: Date.now(), nomSalle, capacite, typeSalle }]);
-    setNomSalle(""); setCapacite(""); setTypeSalle("");
+    if (!nomSalle || !capacite || !localisation) return;
+    setSalles([...salles, { id: Date.now(), nomSalle, capacite, localisation }]);
+    setNomSalle(""); setCapacite(""); setLocalisation("");
   };
 
   const supprimerSalle = (id) => {
     setSalles(salles.filter((s) => s.id !== id));
+  };
+
+  const importerSalles = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => setSalles(JSON.parse(event.target.result));
+    reader.readAsText(file);
   };
 
   return (
@@ -162,24 +197,20 @@ function Salles() {
       <h3>Ajouter une salle</h3>
       <input placeholder="Nom de la salle" value={nomSalle} onChange={(e) => setNomSalle(e.target.value)} />
       <input type="number" placeholder="Capacité" value={capacite} onChange={(e) => setCapacite(e.target.value)} />
-      <select value={typeSalle} onChange={(e) => setTypeSalle(e.target.value)}>
-        <option value="">Type de salle</option>
-        <option value="Cours">Salle de cours</option>
-        <option value="TP">Salle TP</option>
-        <option value="Amphi">Amphithéâtre</option>
-      </select>
+      <input placeholder="Localisation" value={localisation} onChange={(e) => setLocalisation(e.target.value)} />
       <button onClick={ajouterSalle}>Ajouter</button>
+      <input type="file" accept=".json" onChange={importerSalles} />
 
       <table border="1" width="100%" style={{ marginTop: "10px" }}>
         <thead>
-          <tr><th>Nom</th><th>Capacité</th><th>Type</th><th>Action</th></tr>
+          <tr><th>Nom</th><th>Capacité</th><th>Localisation</th><th>Action</th></tr>
         </thead>
         <tbody>
           {salles.map((s) => (
             <tr key={s.id}>
               <td>{s.nomSalle}</td>
               <td>{s.capacite}</td>
-              <td>{s.typeSalle}</td>
+              <td>{s.localisation}</td>
               <td><button onClick={() => supprimerSalle(s.id)}>Supprimer</button></td>
             </tr>
           ))}
