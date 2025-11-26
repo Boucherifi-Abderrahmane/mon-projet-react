@@ -1,29 +1,25 @@
-import "../Chef.css";
+import React from "react";
 
-
-function Chef() {
+export default function ChefDepartement() {
   return (
-    <div className="chefsty">
-      <h1>Bienvenue sur la page du Chef de Département.</h1>
-      <table>
-        <tr>
-          <td>
-            <p>importer les nom des etudiant</p>
-          </td>
-          <td>
-            <input type="file" name="nom des estudiant" id="" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <p>importer les nom des enseignant</p>
-          </td>
-          <td>
-            <input type="file" name="nom des enseignant" id="" />
-          </td>
-        </tr>
-      </table>
+    <div className="min-h-screen flex items-end justify-end bg-gray-100 p-8">
+      <div className="bg-white p-10 rounded-2xl shadow-xl max-w-md w-full space-y-6 relative">
+
+        <h1 className="text-2xl font-bold text-gray-800">
+          Interface Chef de Département
+        </h1>
+
+        <p className="text-gray-600">Choisissez une action :</p>
+        <div className="flex justify-end space-x-4 mt-10">
+          <button className="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-xl text-lg font-semibold transition-all">
+            Publier
+          </button>
+
+          <button className="bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-xl text-lg font-semibold transition-all">
+            Générer
+          </button>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
-export default Chef;
