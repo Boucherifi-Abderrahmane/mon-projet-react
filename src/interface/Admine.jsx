@@ -225,7 +225,8 @@ function GestionModules() {
       <div className="filter-row">
         <input placeholder="Rechercher par module" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
-
+ 
+ 
       <table className="data-table">
         <thead><tr><th>Module</th><th>Action</th></tr></thead>
         <tbody>
