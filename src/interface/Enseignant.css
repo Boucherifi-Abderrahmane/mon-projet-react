@@ -1,0 +1,64 @@
+/* PAGE ENTIÈRE */
+.ens-page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+/* CARTE */
+.ens-card {
+  background: white;
+  width: 1000px;
+  height: 600px;         /* important pour que les boutons restent tout en bas */
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* pousse les boutons en bas */
+}
+
+/* TITRE */
+.ens-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+/* TEXTE */
+.ens-text {
+  color: #4b5563;
+  margin-top: 10px;
+}
+
+/* CONTENEUR DES BOUTONS (TOUT EN BAS À DROITE) */
+.ens-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+/* BOUTONS */
+.btn {
+  padding: 12px 22px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  transition: 0.2s;
+}
+
+/* VERT */
+.btn-blue {
+  background: #0000ff;
+}
+
+.btn-blue:hover {
+  background: #ef03fc;
+}

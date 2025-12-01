@@ -1,0 +1,110 @@
+/* Layout */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: linear-gradient(180deg,#1f3a93,#10316b);
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+}
+.brand {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.side-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: white;
+  padding: 10px;
+  text-align: left;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.side-btn:hover { background: rgba(255,255,255,0.06); }
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 28px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  margin-bottom: 20px;
+}
+
+/* Forms */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.form-row input, .filter-row input, select, .file-input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d8de;
+}
+.file-input { display: inline-block; }
+
+/* Filters */
+.filter-row { display:flex; gap:10px; margin-bottom: 8px; }
+
+/* Tables */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.data-table thead th {
+  background: #1f3a93;
+  color: white;
+  padding: 10px;
+}
+.data-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+/* Buttons */
+button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #3498db;
+  color: white;
+  cursor: pointer;
+}
+button:hover { opacity: 0.95; }
+
+.btn-delete {
+  background: #e74c3c;
+}
+.btn-delete:hover { background: #c0392b; }
+
+/* Responsive */
+@media (max-width: 800px) {
+  .sidebar { display: none; }
+  .content { padding: 14px; }
+  .form-row { flex-direction: column; align-items: stretch; }
+}
