@@ -1,10 +1,10 @@
 // ...existing code...
 import "./App.css";
 import { useNavigate, Routes, Route } from "react-router-dom";
-import Admine from "./interface/Admine.jsx";
-import Chef from "./interface/Chef.jsx";
-import Enseignant from "./interface/Enseignant.jsx";
-import Etudiant from "./interface/Etudiant.jsx";
+import Admine from "./Admine.jsx";
+import Chef from "./Chef.jsx";
+import Enseignant from "./Enseignant.jsx";
+import Etudiant from "./Etudiant.jsx";
 
 function FormPage() {
   const navigate = useNavigate();
