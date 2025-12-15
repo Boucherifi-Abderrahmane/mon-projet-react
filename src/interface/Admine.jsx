@@ -15,6 +15,10 @@ export default function Admine() {
           <button className="side-btn" onClick={() => setPage("modules")}>Modules</button>
           <button className="side-btn" onClick={() => setPage("salles")}>Salles</button>
           <button className="side-btn" onClick={() => setPage("emploi")}>Emploi du temps</button>
+          <button className="side-btn" onClick={() => setPage("examens")}>
+  Examens
+</button>
+
         </nav>
       </aside>
 
@@ -27,6 +31,8 @@ export default function Admine() {
         {page === "emploi" && (
           <GestionEmploisDuTemps />
         )}
+         {page === "examens" && <GestionExamens />
+}
       </main>
     </div>
   );
@@ -459,4 +465,154 @@ function GestionEmploisDuTemps() {
     </div>
   );
 }
+function GestionExamens() {
+  const heureEnMinutes = (heure) => {
+  const [h, m] = heure.split(":").map(Number);
+  return h * 60 + m;
+};
+
+  const [examens, setExamens] = useState([]);
+
+  const [module, setModule] = useState("");
+  const [date, setDate] = useState("");
+  const [heure, setHeure] = useState("");
+  const [duree, setDuree] = useState("");
+  const [salle, setSalle] = useState("");
+  const [type, setType] = useState("");
+
+  const ajouterExamen = () => {
+  if (!module || !date || !heure || !duree || !salle || !type) {
+    alert("Veuillez remplir tous les champs");
+    return;
+  }
+
+  const debutNouveau = heureEnMinutes(heure);
+  const finNouveau = debutNouveau + Number(duree) * 60;
+
+  const conflit = examens.some((e) => {
+    if (e.salle !== salle || e.date !== date) return false;
+
+    const debutExistant = heureEnMinutes(e.heure);
+    const finExistant = debutExistant + Number(e.duree) * 60;
+
+    return debutNouveau < finExistant && finNouveau > debutExistant;
+  });
+
+  if (conflit) {
+    alert("Conflit détecté : la salle est déjà occupée à cet horaire.");
+    return;
+  }
+
+  setExamens([
+    ...examens,
+    {
+      id: Date.now(),
+      module,
+      date,
+      heure,
+      duree,
+      salle,
+      type,
+    },
+  ]);
+
+  // reset
+  setModule("");
+  setDate("");
+  setHeure("");
+  setDuree("");
+  setSalle("");
+  setType("");
+};
+
+  const supprimer = (id) =>
+    setExamens(examens.filter((e) => e.id !== id));
+
+  return (
+    <div className="card">
+      <h2>Gestion des Examens</h2>
+
+      {/* FORMULAIRE */}
+      <div className="form-row">
+        <input
+          placeholder="Module"
+          value={module}
+          onChange={(e) => setModule(e.target.value)}
+        />
+
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+
+        <input
+          type="time"
+          value={heure}
+          onChange={(e) => setHeure(e.target.value)}
+        />
+
+        <input
+          placeholder="Durée (heures)"
+          value={duree}
+          onChange={(e) => setDuree(e.target.value)}
+        />
+
+        <input
+          placeholder="Salle"
+          value={salle}
+          onChange={(e) => setSalle(e.target.value)}
+        />
+
+        <select value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="">Type</option>
+          <option value="Ecrit">Écrit</option>
+          <option value="Oral">Oral</option>
+        </select>
+
+        <button onClick={ajouterExamen}>Créer examen</button>
+      </div>
+
+      {/* TABLE */}
+      <table className="data-table">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Durée</th>
+            <th>Salle</th>
+            <th>Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {examens.length === 0 ? (
+            <tr>
+              <td colSpan="7">Aucun examen</td>
+            </tr>
+          ) : (
+            examens.map((e) => (
+              <tr key={e.id}>
+                <td>{e.module}</td>
+                <td>{e.date}</td>
+                <td>{e.heure}</td>
+                <td>{e.duree}</td>
+                <td>{e.salle}</td>
+                <td>{e.type}</td>
+                <td>
+                  <button className="btn-delete" onClick={() => supprimer(e.id)}>
+                    Supprimer
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
     

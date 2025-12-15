@@ -1,13 +1,23 @@
 // ...existing code...
 import "./App.css";
+import { useEffect } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import Admine from "./Admine.jsx";
 import Chef from "./Chef.jsx";
 import Enseignant from "./Enseignant.jsx";
 import Etudiant from "./Etudiant.jsx";
 
+// ---------- FORM PAGE ----------
 function FormPage() {
   const navigate = useNavigate();
+
+  // 🔥 test Laravel API ici
+  useEffect(() => {
+    fetch("http://localhost:8000/api/test")
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,8 +29,7 @@ function FormPage() {
       return;
     }
 
-    // règles de redirection selon le préfixe du matricule
-    if (/^ADM/.test(matricule)) {
+    if (/^ADM/.test(matricule)) { 
       navigate("/admine");
     } else if (/^CH(E)?/.test(matricule) || /^CH/.test(matricule)) {
       navigate("/chef");
@@ -29,25 +38,27 @@ function FormPage() {
     } else if (/^ET/.test(matricule)) {
       navigate("/etudiant");
     } else {
-      // fallback : si aucune règle ne correspond, rester sur la page ou envoyer vers "/"
       alert("Matricule non reconnu. Vérifiez le format.");
       navigate("/");
     }
   };
 
   return (
+    
     <div className="form-center">
+      <div className="form-header" >
+        <h1>Connexion</h1>
+        <p>Veuillez entrer votre matricule et mot de passe.</p>
+      </div>
       <form className="form-card" onSubmit={handleSubmit}>
-
-
         <div className="form-group">
           <label htmlFor="matricule">Matricule</label>
-          <input id="matricule" name="matricule" type="text" placeholder="Ex: ADM001, CH123, EN045, ET678" required />
+          <input id="matricule" name="matricule" type="text" required />
         </div>
 
         <div className="form-group">
           <label htmlFor="password">Mot de passe</label>
-          <input id="password" name="password" type="password" placeholder="Votre mot de passe" required />
+          <input id="password" name="password" type="password" required />
         </div>
 
         <div className="form-actions">
@@ -58,6 +69,7 @@ function FormPage() {
   );
 }
 
+// ---------- APP ROUTES ----------
 export default function App() {
   return (
     <Routes>
@@ -69,4 +81,3 @@ export default function App() {
     </Routes>
   );
 }
-// ...existing code...
