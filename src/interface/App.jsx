@@ -12,12 +12,7 @@ function FormPage() {
   const navigate = useNavigate();
 
   // 🔥 test Laravel API ici
-  useEffect(() => {
-    fetch("http://localhost:8000/api/test")
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(err => console.error(err));
-  }, []);
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +40,10 @@ function FormPage() {
 
   return (
     
+    
     <div className="form-center">
+      
+      
       <div className="form-header" >
         <h1>Connexion</h1>
         <p>Veuillez entrer votre matricule et mot de passe.</p>
